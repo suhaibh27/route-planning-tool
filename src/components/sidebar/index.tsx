@@ -15,7 +15,7 @@ function SideBar(props: { summary: Summary, points: MapPoint[], addPoint: (point
             {
                 (points && points.length > 0) &&
                 points.map((point) => (
-                    <div className="border rounded-sm border-gray-300 p-4 bg-[color:var(--secondary-color)] flex items-center gap-x-3">
+                    <div key={point.id} className="border rounded-sm border-gray-300 p-4 bg-[color:var(--secondary-color)] flex items-center gap-x-3">
                         <div className="w-8 h-8 flex-shrink-0 rounded-full bg-white text-[color:var(--primary-color)] flex items-center justify-center font-bold">
                             {point.label}
                         </div>
