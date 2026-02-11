@@ -12,8 +12,8 @@ const DEFAULT_MAP_STYLE: string = "mapbox://styles/suhaibhk/cmlfeia9v001d01sf84h
 const DEFAULT_ZOOM_LEVEL: number = 14;
 const DEFAULT_CENTER: LngLatLike = [35.93, 31.95];
 
-function Mapbox(props: { addPoint: any; points: MapPoint[]; setSummary: (summary: Summary) => void; }) {
-    const { addPoint, points, setSummary } = props;
+function Mapbox(props: { addPoint: any; points: MapPoint[]; setSummary: (summary: Summary) => void; routeInformation:any }) {
+    const { addPoint, points, setSummary, routeInformation } = props;
 
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<Map | null>(null);
@@ -94,6 +94,7 @@ function Mapbox(props: { addPoint: any; points: MapPoint[]; setSummary: (summary
         const mapboxdDirectionCoords = pairsToMapboxCoordinates(points)
         const json = await fetchRoute(mapboxdDirectionCoords);
         const data = json.routes[0];
+        routeInformation.current = data;
         const geojson = {
             'type': 'Feature' as const,
             'properties': {},

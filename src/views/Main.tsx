@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Mapbox from "../components/map"
 import SideBar from "../components/sidebar"
 import type { LngLatLike } from "mapbox-gl";
+import { exportJsonData } from "../utils/Utils";
 
 
 export type MapPoint = {
     id: string;
     coordinates: LngLatLike;
     label: string;
-    name?:string
+    name?: string
 };
 
 export type Summary = {
@@ -21,12 +22,14 @@ function Main() {
     const [points, setPoints] = useState<MapPoint[]>([]);
     const [summary, setSummary] = useState<Summary>({ totalDistance: 0, totalDuration: 0 });
 
+    const routeInformation = useRef({})
+
     function addPoint(point: LngLatLike, pointDetails: any = {}) {
         if (points.length >= 25) {
             alert("Maximum of 25 points allowed.");
             return;
         }
-        setPoints((prevPoints) => [...prevPoints, { coordinates: point, id: `point-${prevPoints.length + 1}`, label: `${prevPoints.length + 1}`,name:pointDetails.place_name }]);
+        setPoints((prevPoints) => [...prevPoints, { coordinates: point, id: `point-${prevPoints.length + 1}`, label: `${prevPoints.length + 1}`, name: pointDetails.place_name }]);
     }
 
     return (
@@ -34,14 +37,14 @@ function Main() {
             <div className="p-4 flex justify-between items-center">
                 <h1 className="text-2xl text-white">Route Planning Tool</h1>
                 <div className="flex items-center">
-                    <button className="p-3 bg-gray-300 rounded-sm mr-4">optimize</button>
-                    <button className="p-3 bg-gray-300 rounded-sm">export</button>
+                    <button onClick={()=>exportJsonData(routeInformation.current||{},"route")} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+                        disabled={points.length <= 1}>Export as json</button>
                 </div>
             </div>
             <div className="flex flex-1">
-                <SideBar  addPoint={addPoint} summary={summary} points={points}/>
+                <SideBar addPoint={addPoint} summary={summary} points={points} />
                 <div className="flex-1 bg-gray-300">
-                    <Mapbox addPoint={addPoint} points={points} setSummary={(summary:Summary)=>setSummary(summary)}/>
+                    <Mapbox routeInformation={routeInformation} addPoint={addPoint} points={points} setSummary={(summary: Summary) => setSummary(summary)} />
                 </div>
             </div>
             <div className="p-4 ">
