@@ -4,7 +4,8 @@ import { pairsToMapboxCoordinates } from "../../utils/Utils";
 import type { MapPoint, Summary } from "../../views/Main";
 import { fetchRoute, fetchStreetName, } from "../../apis";
 
-mapboxgl.accessToken = "pk.eyJ1Ijoic3VoYWliaGsiLCJhIjoiY21sZmN3aGNrMDBoczNjc2lod2psdDI5MiJ9.V2FKtFr-p85U0xrCAP1iSQ";
+mapboxgl.accessToken = import.meta.env.VITE_PUBLIC_MAPBOX_TOKEN+"";
+
 mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js');
 
 const DEFAULT_MAP_STYLE: string = "mapbox://styles/suhaibhk/cmlfeia9v001d01sf84h0dfl7";
