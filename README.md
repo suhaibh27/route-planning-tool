@@ -14,7 +14,7 @@ This project is a Mapbox-based interactive route planning tool. It allows users 
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)  
+- Node.js 
 - npm or yarn  
 - Mapbox access token  
 
